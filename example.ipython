@@ -1,0 +1,10 @@
+%run myGOES16.sci.py
+desc = get_channels_descriptions()
+img = create_rgb(desc)
+plt.imsave('data/rgb.png', img)
+img = create_rgb13(desc)
+plt.imsave('data/rgb13.png', img)
+img = create_NDVI(desc)
+plt.imshow(img, cmap='summer_r')
+plt.colorbar()
+plt.savefig('data/nvdi.png')
