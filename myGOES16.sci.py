@@ -29,10 +29,9 @@ DIR_LIST = 'https://www.googleapis.com/storage/v1/b/gcp-public-data-goes-16/o?pr
 CHUNK_SIZE = 5000000 # 5MB
 # Final size of the generated images. Refer to the "Channel 2 is X by Y" message for the full size.
 # This must be a common denominator to all layers. (10848, 5424, 2712, 1356, ...)
-FINAL_SIZE = (10848, 10848)
+#FINAL_SIZE = (10848, 10848)
 FINAL_SIZE = (5424,  5424)
-FINAL_SIZE = (2712,  2712)
-FINAL_SIZE = (5424,  5424)
+#FINAL_SIZE = (2712,  2712)
 
 THUMB_SIZE = (1000, 1000)
 
@@ -352,5 +351,4 @@ def create_NDVI(desc=None):
     zoom_f = [FINAL_SIZE[0]/v.shape[0], FINAL_SIZE[1]/v.shape[1]]
     v = zoom(v, zoom_f, order=1)
     img = (v-r)/(v+r)
-    img = (img - img-min())/(img.max() - img.min())
     return img
