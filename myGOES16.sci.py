@@ -30,9 +30,9 @@ CHUNK_SIZE = 5000000 # 5MB
 # Final size of the generated images. Refer to the "Channel 2 is X by Y" message for the full size.
 # This must be a common denominator to all layers. (10848, 5424, 2712, 1356, ...)
 #FINAL_SIZE = (10848, 10848)
-FINAL_SIZE = (5424,  5424)
+#FINAL_SIZE = (5424,  5424)
 #FINAL_SIZE = (2712,  2712)
-
+FINAL_SIZE = (500,  500)
 THUMB_SIZE = (1000, 1000)
 
 # Polling time - how often to check the API for new images (seconds)
@@ -351,4 +351,13 @@ def create_NDVI(desc=None):
     zoom_f = [FINAL_SIZE[0]/v.shape[0], FINAL_SIZE[1]/v.shape[1]]
     v = zoom(v, zoom_f, order=1)
     img = (v-r)/(v+r)
+    return img
+
+def create_image(channel, desc=None):
+    if desc == None:
+        desc = get_channels_descriptions(channels)
+    get_channel_file(channel, desc[channel])
+    img = np.array(h5py.File(desc[channel]['filepath'],'r')['CMI'])
+    zoom_f = [FINAL_SIZE[0]/img.shape[0], FINAL_SIZE[1]/img.shape[1]]
+    img = zoom(img, zoom_f, order=1)
     return img

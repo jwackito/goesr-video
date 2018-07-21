@@ -8,3 +8,17 @@ img = create_NDVI(desc)
 plt.imshow(img, cmap='summer_r')
 plt.colorbar()
 plt.savefig('data/nvdi.png')
+
+# Cartopy dependencies alert!!
+import cartopy.crs as ccrs
+# get upper level tropospheric water vapor layer (band number 8)
+img = create_image(8,desc)
+# GOES-16 longitude
+longitude = -75.0
+# GOES-16 height in meters
+height = 35786023.0
+ax = plt.axes(projection=ccrs.Geostationary(central_longitude=longitude, satellite_height=height))
+ax.set_global()
+ax.coastlines(resolution='10m', color='gray', linewidth=1)
+ax.imshow(img, origin='upper', transform=ccrs.Geostationary(central_longitude=longitude, satellite_height=height), extent=[ax.get_xlim()[0], ax.get_xlim()[1], ax.get_ylim()[0], ax.get_ylim()[1]], cmap='gray')
+plt.savefig('data/upper_level_tropospheric_water_vapor_coastlines.png')
