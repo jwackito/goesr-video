@@ -17,8 +17,11 @@ img = create_image(8,desc)
 longitude = -75.0
 # GOES-16 height in meters
 height = 35786023.0
-ax = plt.axes(projection=ccrs.Geostationary(central_longitude=longitude, satellite_height=height))
+states = cfeature.NaturalEarthFeature(category='cultural', scale='10m', facecolor='none', name='admin_1_states_provinces_shp')
+projection = ccrs.Geostationary(central_longitude=longitude, satellite_height=height)
+ax = plt.axes(projection=projection)
 ax.set_global()
-ax.coastlines(resolution='10m', color='gray', linewidth=1)
-ax.imshow(img, origin='upper', transform=ccrs.Geostationary(central_longitude=longitude, satellite_height=height), extent=[ax.get_xlim()[0], ax.get_xlim()[1], ax.get_ylim()[0], ax.get_ylim()[1]], cmap='gray')
+#ax.coastlines(resolution='10m', color='gray', linewidth=1)
+ax.add_feature(states, linewidth=.5, edgecolor='grey')
+ax.imshow(img, origin='upper', transform=projection, extent=[ax.get_xlim()[0], ax.get_xlim()[1], ax.get_ylim()[0], ax.get_ylim()[1]], cmap='gray')
 plt.savefig('data/upper_level_tropospheric_water_vapor_coastlines.png')
